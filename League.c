@@ -92,17 +92,17 @@ void read_matches(League *league, const char *file_name)
     fclose(fp);
 }
 
-int num_wins(League *league, Team *team) {
+int num_wins(const League *league, const Team *t) {
     int counter = 0;
     for (int i = 0; i < league->num_matches; ++i) {
-        if (team_participated(league->matches[i], team) && team_won(league->matches[i], team)) {
+        if (team_participated(league->matches[i], t) && team_won(league->matches[i], t)) {
             counter++;
         }
     }
     return counter;
 }
 
-int num_draws(League *league, Team *t) {
+int num_draws(const League *league, const Team *t) {
     int counter = 0;
     for (int i = 0; i < league->num_matches; ++i) {
         if (team_participated(league->matches[i], t) && match_tied(league->matches[i])) {
@@ -112,17 +112,17 @@ int num_draws(League *league, Team *t) {
     return counter;
 }
 
-int num_losses(League *league, Team *team) {
+int num_losses(const League *league, const Team *t) {
     int counter = 0;
     for (int i = 0; i < league->num_matches; ++i) {
-        if (team_participated(league->matches[i], team) && team_lost(league->matches[i], team)) {
+        if (team_participated(league->matches[i], t) && team_lost(league->matches[i], t)) {
             counter++;
         }
     }
     return counter;
 }
 
-int num_matches(League *league, Team *team) {
+int num_matches(const League *league, const Team *team) {
     int counter = 0;
     for (int i = 0; i < league->num_matches; ++i) {
         if (team_participated(league->matches[i], team)) {
@@ -133,27 +133,27 @@ int num_matches(League *league, Team *team) {
 
 }
 
-int num_GF(League *league, Team *team) {
+int num_GF(const League *league, const Team *t) {
     int counter = 0;
     for (int i = 0; i < league->num_matches; ++i) {
-        if (team_participated(league->matches[i], team)) {
-            counter += GF(league->matches[i], team);
+        if (team_participated(league->matches[i], t)) {
+            counter += GF(league->matches[i], t);
         }
     }
     return counter;
 }
 
-int num_GA(League *league, Team *team) {
+int num_GA(const League *league, const Team *t) {
     int counter = 0;
     for (int i = 0; i < league->num_matches; ++i) {
-        if (team_participated(league->matches[i], team)) {
-            counter += GA(league->matches[i], team);
+        if (team_participated(league->matches[i], t)) {
+            counter += GA(league->matches[i], t);
         }
     }
     return counter;
 }
 
-void print_table(League *league) {
+void print_table(const League *league) {
     printf("Team\t\t\tGames\t\tWins\t\tTies\t\tLosses\t\tGF\t\t\tGA\t\t\tPoints\n");
     for (int j = 0; j < league->num_teams; ++j) {
         printf("%-10s\t\t%-10d\t%-10d\t%-10d\t%-10d\t%-10d\t%-10d\t%-10d\n", league->teams[j]->TeamName, num_matches(league, league->teams[j]),

@@ -27,14 +27,14 @@ void MatchDestroy(Match * match){
     free(match);
 }
 
-bool team_participated(Match *match, Team *team) {
+bool team_participated(const Match *match, const Team *team) {
     return ((team->TeamName==match->teamGuest->TeamName) || (team->TeamName == match->teamHost->TeamName));
 }
 
-bool match_tied(Match* match){
+bool match_tied(const Match *match){
     return match->goalGuest==match->goalHost;
 }
-bool team_won(Match* match, Team* team){
+bool team_won(const Match *match, const Team *team){
     if(!team_participated(match, team)){
         printf("Error in file %s, line %d\n", __FILE__, __LINE__);
         printf("Team %s has not participated in match\n", team->TeamName);
@@ -50,7 +50,7 @@ bool team_won(Match* match, Team* team){
     }
 
 
-bool team_lost(Match* match, Team* team) {
+bool team_lost(const Match *match, const Team *team) {
     if (!team_participated(match, team)) {
         printf("Error in file %s, line %d\n", __FILE__, __LINE__);
         printf("Team %s has not participated in match\n", team->TeamName);
@@ -59,7 +59,7 @@ bool team_lost(Match* match, Team* team) {
     return (!match_tied(match) && !team_won(match, team));
 
 }
-int GF(Match* match, Team* team){
+int GF(const Match *match, const Team *team){
     if (!team_participated(match, team)) {
         printf("Error in file %s, line %d\n", __FILE__, __LINE__);
         printf("Team %s has not participated in match\n", team->TeamName);
@@ -68,7 +68,7 @@ int GF(Match* match, Team* team){
     return (match->teamGuest == team) ? match->goalGuest : match->goalHost;
 
 }
-int GA(Match* match, Team* team){
+int GA(const Match *match, const Team *team){
     if (!team_participated(match, team)) {
         printf("Error in file %s, line %d\n", __FILE__, __LINE__);
         printf("Team %s has not participated in match\n", team->TeamName);

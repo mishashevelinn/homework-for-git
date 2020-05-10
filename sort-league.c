@@ -41,7 +41,7 @@ bool	is_better(const League* league, const Team* t1, const Team* t2)
  * This function takes an array of pointers to struct Team and the number of teams and
  * sorts them according to the criteria in is_better
  ***************************************************************************************/
-void	sort_league(League* league)  //FIXME this seems to not work :
+void	sort_league(League* league)
 {
     int i;
     for(i=0; i<league->num_teams; i++) {

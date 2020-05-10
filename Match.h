@@ -15,11 +15,11 @@ typedef struct{
 Match * MatchCreate(Team* teamH, Team* teamG, int goalH, int goalG);
 void MatchDestroy(Match * match);
 
-bool team_participated(Match *match, Team *team);
-bool match_tied(Match* match);
-bool team_won(Match* match, Team* team);
-bool team_lost(Match* match, Team* team);
-int GF(Match* match, Team* team);
-int GA(Match* match, Team* team);
+bool team_participated(const Match *match, const Team *team);
+bool match_tied(const Match *match);
+bool team_won(const Match *match, const Team *team);
+bool team_lost(const Match *match, const Team *team);
+int GF(const Match *match, const Team *team);
+int GA(const Match *match, const Team *team);
 
 #endif //EX4_MATCH_H
