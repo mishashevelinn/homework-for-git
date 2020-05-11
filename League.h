@@ -9,9 +9,8 @@
 
 #ifndef EX4_LEAGUE_H
 #define EX4_LEAGUE_H
-
-
-typedef struct {
+typedef struct
+{
     int num_matches, num_teams;
     Team **teams;
     Match **matches;
@@ -30,6 +29,7 @@ int num_wins(const League *league, const Team *t);
 int num_draws(const League *league, const Team *t);
 
 int num_losses(const League *league, const Team *t);
+
 //returns number of matches given team participated in
 int num_matches(const League *league, const Team *t);
 
