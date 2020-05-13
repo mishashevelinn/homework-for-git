@@ -3,15 +3,16 @@
 //
 #include <stdio.h>
 #include <stdlib.h>
+
 #ifndef EX4_TEAM_H
 #define EX4_TEAM_H
-
-
-typedef struct {
-    const char* TeamName;
+typedef struct
+{
+    const char *TeamName;
 } Team;
-Team * TeamCreate (const char* name);
 
-void TeamDestroy ( Team *team);
+Team *TeamCreate(const char *name);
+
+void TeamDestroy(Team *team);
 
 #endif //EX4_TEAM_H
