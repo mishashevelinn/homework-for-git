@@ -109,8 +109,8 @@ void read_matches(League *league, const char *file_name) {
     fclose(fp);
 }
 
-int num_wins(const League *league, const Team *t) { //
-    int counter = 0;
+int num_wins(const League *league, const Team *t) { // check how many time team won in all of the league so far
+    int counter = 0; // use counter and count with loop (of matches in league) if team won in each match
     int i;
     for (i = 0; i < league->num_matches; ++i) {
         if (team_participated(league->matches[i], t) && team_won(league->matches[i], t)) {
@@ -120,8 +120,8 @@ int num_wins(const League *league, const Team *t) { //
     return counter;
 }
 
-int num_draws(const League *league, const Team *t) {
-    int counter = 0;
+int num_draws(const League *league, const Team *t) { // check how many times team got tie in all of the league so far
+    int counter = 0; // use counter and count with loop (of matches in league) if team got tie in each match
     int i;
     for (i = 0; i < league->num_matches; ++i) {
         if (team_participated(league->matches[i], t) && match_tied(league->matches[i])) {
@@ -131,8 +131,8 @@ int num_draws(const League *league, const Team *t) {
     return counter;
 }
 
-int num_losses(const League *league, const Team *t) {
-    int counter = 0;
+int num_losses(const League *league, const Team *t) { // check how many times team lost in all of the league
+    int counter = 0; // use counter and count with loop (of matches in league) if team lost in each match
     int i;
     for (i = 0; i < league->num_matches; ++i) {
         if (team_participated(league->matches[i], t) && team_lost(league->matches[i], t)) {
