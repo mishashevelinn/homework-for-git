@@ -7,6 +7,8 @@
 #include "League.h"
 #include <string.h>
 #include "sort-league.h"
+#include <stdio.h>
+#include <ctype.h>
 
 /***************************************************************************************
  *Dynamically allocating the memory according to data structure League, and initialize its
@@ -53,19 +55,20 @@ void read_teams(League *league, const char *file_name) {
         exit(-1);
     }
     //getline() allocates a memory for the line and returns a pointer to it!
+    //reading team name by lines in text file
     while ((len = getline(&line, &size, fp)) != EOF) {
         line[len - 1] = 0;  //get rid of \n
         league->teams = (Team **) realloc(league->teams, sizeof(Team) * (league->num_teams + 1));
         league->teams[league->num_teams] = TeamCreate(line);
         league->num_teams++;
     }
-    //line still occupies a memory allocated
+    //line still occupies a memory allocated. Free it.
     free(line);
     fclose(fp);
 }
-
+//reads matches list from text, checks correct format and initializes League->matches field by getting file_path and *League
 void read_matches(League *league, const char *file_name) {
-    league->matches = NULL;
+    league->matches = NULL;                             //same idea as in line 45
     league->num_matches = 0;
     FILE *fp = fopen(file_name, "r");
     if (!fp) {
@@ -73,36 +76,39 @@ void read_matches(League *league, const char *file_name) {
         exit(-1);
     }
     size_t len = 0;
-    char ptrH[10];
-    char ptrG[10];
-    int goalH = -1;
-    int goalG = -1;
+    char ptrH[20];  //temporary containers for string which stores host team name; assuming there's no team names over 20 letters
+    char ptrG[20];  //temporary containers for string which stores host team name
+    int goalH = 0;
+    int goalG = 0;
+    //scans each line according to format(4 words/numbers, separated by tab)
     while ((len = (size_t) fscanf(fp, "%s\t%s\t%d\t%d", ptrH, ptrG, &goalH, &goalG)) != EOF) {
-        if (len != 4) {
-            printf("line %d in file %s is not in expected format\n", league->num_matches + 1, file_name);
+        if ((len != 4) || isdigit(goalH) || isdigit(goalG)) { //check if input is ok also proper points format is checked
+            fprintf(stderr, "line %d in file %s is not in expected format\n", league->num_matches + 1, file_name);
             exit(1);
         }
-        league->matches = (Match **) realloc(league->matches, sizeof(Match) * league->num_matches);
-        Team *teamH = NULL;
+        //since we don't know how many *Teams's we need to allocate, let's increasingly reallocate reallocate memory
+        //according to number of matches(lines in text file)
+        league->matches = (Match **) realloc(league->matches, sizeof(Match) * league->num_matches); //TODO +1???
+        Team *teamH = NULL;//container for potential team(guest and host(below)) will point to string in text file
         Team *teamG = NULL;
-        int i;
+        int i;  //we want teams in array created by read_teams to match with teams that in matches array
         for (i = 0; i < league->num_teams; i++) {
-            if (!strcmp((league->teams[i]->TeamName), ptrH)) {
-                teamH = league->teams[i];
-            } else if (!strcmp((league->teams[i]->TeamName), ptrG)) {
+            if (!strcmp((league->teams[i]->TeamName), ptrH)) {//comparing string(*char) from teams to those we've found
+                teamH = league->teams[i];                      //in matches txt file
+            } else if (!strcmp((league->teams[i]->TeamName), ptrG)) {//it can be guest or host
                 teamG = league->teams[i];
             }
-            if (teamH != NULL && teamG != NULL) {
+            if (teamH != NULL && teamG != NULL) {           //if containers are full, we're done, exit from loop
                 break;
             }
         }
-        league->matches[league->num_matches] = MatchCreate(teamH, teamG, goalH, goalG);
-        league->num_matches++;
+        league->matches[league->num_matches] = MatchCreate(teamH, teamG, goalH, goalG); //by now we have enough data to
+        league->num_matches++;                                                          //create a match
     }
     fclose(fp);
 }
 
-int num_wins(const League *league, const Team *t) {
+int num_wins(const League *league, const Team *t) { //
     int counter = 0;
     int i;
     for (i = 0; i < league->num_matches; ++i) {

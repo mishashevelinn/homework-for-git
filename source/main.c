@@ -1,6 +1,5 @@
 
 #include <stdio.h>
-#include <wchar.h>
 #include "sort-league.h"
 #include "Team.h"
 #include "Match.h"
