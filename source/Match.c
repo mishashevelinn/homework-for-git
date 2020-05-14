@@ -58,7 +58,7 @@ bool team_won(const Match *match, const Team *team) // check if team won in matc
     return match->teamHost->TeamName == team->TeamName;
 }
 
-bool team_lost(const Match *match, const Team *team) check if team lost in match
+bool team_lost(const Match *match, const Team *team) //check if team lost in match
 {
     if (!team_participated(match, team))
     {

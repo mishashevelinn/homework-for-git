@@ -101,6 +101,7 @@ void read_matches(League *league, const char *file_name) {
             if (teamH != NULL && teamG != NULL) {           //if containers are full, we're done, exit from loop
                 break;
             }
+            else fprintf(stderr, "Teams and Matches files doesn't match, please check your data.");
         }
         league->matches[league->num_matches] = MatchCreate(teamH, teamG, goalH, goalG); //by now we have enough data to
         league->num_matches++;                                                          //create a match
@@ -140,11 +141,11 @@ int num_losses(const League *league, const Team *t) {
     }
     return counter;
 }
-
+//takes team and league and returns how many matches the team played in season
 int num_matches(const League *league, const Team *team) {
     int counter = 0;
     int i;
-    for (i = 0; i < league->num_matches; ++i) {
+    for (i = 0; i < league->num_matches; ++i) {         //standard counter and participation check
         if (team_participated(league->matches[i], team)) {
             counter++;
         }
@@ -152,29 +153,29 @@ int num_matches(const League *league, const Team *team) {
     return counter;
 
 }
-
+//takes team and league and returns how many goals for it are in season(total)
 int num_GF(const League *league, const Team *t) {
     int counter = 0;
     int i;
     for (i = 0; i < league->num_matches; ++i) {
-        if (team_participated(league->matches[i], t)) {
-            counter += GF(league->matches[i], t);
+        if (team_participated(league->matches[i], t)) {                 //this functions also check if team participated
+            counter += GF(league->matches[i], t);                       //in match
         }
     }
     return counter;
 }
-
+//takes team and league and returns how many goals against it are in season(total)
 int num_GA(const League *league, const Team *t) {
     int counter = 0;
     int i;
-    for (i = 0; i < league->num_matches; ++i) {
+    for (i = 0; i < league->num_matches; ++i) {     //regular counter going over each team
         if (team_participated(league->matches[i], t)) {
             counter += GA(league->matches[i], t);
         }
     }
     return counter;
 }
-
+//takes pointer to league and prints the statistics in table
 void print_table(const League *league) {
     printf("Team\t\t\tGames\t\tWins\t\tTies\t\tLosses\t\tGF\t\tGA\t\tPoints\n");
     int j;
