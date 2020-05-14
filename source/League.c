@@ -6,7 +6,7 @@
 #include "Match.h"
 #include "League.h"
 #include <string.h>
-#include "sort-league.h" //TODO using this only for MACROS in print functiona
+#include "sort-league.h"
 
 /***************************************************************************************
  *Dynamically allocating the memory according to data structure League, and initialize its
@@ -33,14 +33,12 @@ void LeagueDestroy(League *league) {
         team = league->teams[i];
         TeamDestroy(team);                      //using native Team cleaner --see Team.c
     }
-    free(league->teams);                        //after cleaning an array, freeing the whole block of memory allocated for array
     Match *match;                               //also in line 42
     for (i = 0; i < league->num_matches; i++)//destroy matches in league
     {
         match = league->matches[i];
         MatchDestroy(match);                    //native Match cleaner --see Match.c
     }
-    free(league->matches);
     free(league);//destroy league itself
 }//reads team names from text file and initializes memory allocated for teams->Team
 void read_teams(League *league, const char *file_name) {

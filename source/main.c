@@ -7,9 +7,13 @@
 #include "League.h"
 
 
-int main(int argc, char *argv[]) {
-    if (argc != 3){
-        printf("program needs two parameters input");
+int main(int argc, const char *argv[]) {
+    switch (argc) {
+        case 1: fprintf(stderr, "Program takes 2 parameters: (char* file_name1, char* file_name2). No parameters given\n");
+            exit(-1);
+        case 2: fprintf(stderr, "Program takes 2 parameters:(char* file_name1, char* file_name2). 1 parameter given\n");
+            exit(-1);
+
     }
     League *liga1 = LeagueCreate();
     read_teams(liga1, argv[1]);
