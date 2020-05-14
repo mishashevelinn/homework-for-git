@@ -28,14 +28,14 @@ League *LeagueCreate() {
 void LeagueDestroy(League *league) {
     Team *team;
     int i;
-    for (i = 0; i < league->num_teams; ++i)//destroy teams in league
+    for (i = 0; i < league->num_teams; i++)//destroy teams in league
     {
         team = league->teams[i];
         TeamDestroy(team);                      //using native Team cleaner --see Team.c
     }
     free(league->teams);                        //after cleaning an array, freeing the whole block of memory allocated for array
     Match *match;                               //also in line 42
-    for (i = 0; i < league->num_matches; ++i)//destroy matches in league
+    for (i = 0; i < league->num_matches; i++)//destroy matches in league
     {
         match = league->matches[i];
         MatchDestroy(match);                    //native Match cleaner --see Match.c
