@@ -1,5 +1,5 @@
 //
-// Created by tal5s on 05/05/2020.
+// This file provides functions signatures and structs for .c file.
 //
 #include "Team.h"
 #include "Match.h"
@@ -30,7 +30,6 @@ int num_draws(const League *league, const Team *t);
 
 int num_losses(const League *league, const Team *t);
 
-//returns number of matches given team participated in
 int num_matches(const League *league, const Team *t);
 
 int num_GF(const League *league, const Team *t);

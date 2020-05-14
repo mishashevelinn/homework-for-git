@@ -7,15 +7,19 @@
 #include "League.h"
 
 
-int main() {
+int main(int argc, char *argv[]) {
+    if (argc != 3){
+        printf("program needs two parameters input");
+    }
     League *liga1 = LeagueCreate();
-    read_teams(liga1, "teams.txt");
-    read_matches(liga1, "matches.txt");
+    read_teams(liga1, argv[1]);
+    read_matches(liga1, argv[2]);
     sort_league(liga1);
     print_table(liga1);
     LeagueDestroy(liga1);
-    printf("%d", liga1->num_matches);
-
 
     return 0;
 }
+
+
+

@@ -3,4 +3,4 @@ project(git_check C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(Ex4 main.c Team.c Team.h Match.c Match.h League.c League.h sort-league.c sort-league.h)
+add_executable(Ex4 source/main.c source/Team.c source/Team.h source/Match.c source/Match.h source/League.c source/League.h source/sort-league.c source/sort-league.h)
